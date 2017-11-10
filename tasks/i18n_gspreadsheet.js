@@ -123,7 +123,10 @@ module.exports = function(grunt) {
         // read all translations into an object with the correct keys
         _(rows).each(function(row){
           // if an key override column is set, check that first, then use the default locale
-
+          if (row.tenant.length > 0) {
+            if (options.tenant !== row.tenant) return
+          }
+          
           var use_key_override = options.key_column && row[options.key_column];
           var translation_key = use_key_override ? row[options.key_column] : row[options.default_locale];
           if ( !translation_key ) return;
